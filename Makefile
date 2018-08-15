@@ -6,6 +6,6 @@ output:
 
 uninstall:
 	cfy uninstall openstack-example-network
-	
-del_bl:
+
+bl_del:
 	cfy bl del openstack-example-network

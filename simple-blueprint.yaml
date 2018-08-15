@@ -10,26 +10,6 @@ imports:
   - inputs/openstack_inputs.yaml
   - inputs/inputs.yaml
 
-inputs:
-
-  nameservers:
-    default: [8.8.4.4, 8.8.8.8]
-
-  # public_subnet_cidr:
-  #   default: 10.10.90.0/24
-  #
-  # public_subnet_allocation_pools:
-  #   default:
-  #   - start: 10.10.90.52
-  #     end: 10.10.90.254
-
-  private_subnet_cidr:
-    default: 10.10.91.0/24
-
-  private_subnet_allocation_pools:
-    default:
-    - start: 10.10.91.52
-      end: 10.10.91.254
 
 dsl_definitions:
 
@@ -41,6 +21,7 @@ dsl_definitions:
     project_name: { get_input: keystone_project_name }
     project_domain_name: { get_input: keystone_project_domain_name }
     region: { get_input: region }
+
 
 node_templates:
 
@@ -72,11 +53,6 @@ node_templates:
       openstack_config: *client_config
       use_external_resource: true
       resource_id: { get_input: public_subnet_name }
-      # subnet:
-      #   ip_version: 4
-      #   cidr: { get_input: public_subnet_cidr }
-      #   dns_nameservers: { get_input: nameservers }
-      #   allocation_pools: { get_input: public_subnet_allocation_pools }
     relationships:
     - type: cloudify.relationships.contained_in
       target: public_network
@@ -120,11 +96,11 @@ outputs:
   public_network:
     value: { get_attribute: [ public_network, external_id ] }
 
-  private_network:
-    value: { get_attribute: [ private_network, external_id ] }
-
   public_subnet:
     value: { get_attribute: [ public_subnet, external_id ] }
+
+  private_network:
+    value: { get_attribute: [ private_network, external_id ] }
 
   private_subnet:
     value: { get_attribute: [ private_subnet, external_id ] }

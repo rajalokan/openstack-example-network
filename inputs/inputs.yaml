@@ -1,45 +1,30 @@
 inputs:
 
-  external_network_name:
-    description: Openstack tenant external network name.
-    default: { get_secret: external_network_name }
+  private_subnet_cidr:
+    default: 10.10.91.0/24
 
+  nameservers:
+    default: [8.8.4.4, 8.8.8.8]
 
-  server_name:
-    type: string
-    default: playbox
-
-  image:
-    type: string
-    default: { get_secret: centos_core_image }
-
-  flavor:
-    type: string
-    default: { get_secret: small_image_flavor  }
-
-  private_network_name:
-    type: string
-    default: { get_secret: private_network_name }
-
-  agent_user:
-    description: >
-      User for connecting to agent VMs
-    default: centos
+  private_subnet_allocation_pools:
+    default:
+    - start: 10.10.91.52
+      end: 10.10.91.254
 
   #-----------------------------------------------------------------------------
-
-  public_router_name:
-    type: string
-    default: { get_secret: router_name }
-
-  public_network_name:
-    type: string
-    default: { get_secret: public_network_name }
 
   public_subnet_name:
     type: string
     default: { get_secret: public_subnet_name }
 
-  security_group_name:
+  public_network_name:
     type: string
-    default: "default"
+    default: { get_secret: public_network_name }
+
+  public_router_name:
+    type: string
+    default: { get_secret: public_router_name }
+
+  external_network_name:
+    description: Openstack tenant external network name.
+    default: { get_secret: external_network_name }
